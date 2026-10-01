@@ -1,0 +1,6 @@
+{
+  "name": "OmniFetch - All-in-One Social Media Downloader",
+  "description": "Download supported public videos, reels, posts, images and audio from popular social-media platforms using a simple, fast downloader.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

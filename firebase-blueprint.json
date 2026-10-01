@@ -1,0 +1,176 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile with display settings and metadata",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Firebase Auth UID"
+        },
+        "email": {
+          "type": "string",
+          "description": "User email address"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "User display name"
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "User avatar URL"
+        },
+        "defaultQuality": {
+          "type": "string",
+          "description": "Preferred download quality setting",
+          "enum": ["original", "1080p", "720p", "480p", "360p", "audio"]
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp in ISO format or server timestamp"
+        }
+      },
+      "required": ["uid", "email"]
+    },
+    "DownloadItem": {
+      "title": "DownloadItem",
+      "description": "Record of an analyzed or downloaded public media item in user history",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique history item ID"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner UID"
+        },
+        "platform": {
+          "type": "string",
+          "description": "Detected social media platform"
+        },
+        "url": {
+          "type": "string",
+          "description": "Public source URL"
+        },
+        "title": {
+          "type": "string",
+          "description": "Media title"
+        },
+        "author": {
+          "type": "string",
+          "description": "Creator username or name"
+        },
+        "mediaType": {
+          "type": "string",
+          "description": "video, image, reel, post, carousel, audio, story"
+        },
+        "thumbnailUrl": {
+          "type": "string",
+          "description": "Thumbnail preview URL"
+        },
+        "selectedFormat": {
+          "type": "string",
+          "description": "Format downloaded (mp4, mp3, jpg, png, webm)"
+        },
+        "selectedQuality": {
+          "type": "string",
+          "description": "Quality chosen (1080p, 720p, audio, etc.)"
+        },
+        "status": {
+          "type": "string",
+          "description": "completed, saved, failed"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp"
+        }
+      },
+      "required": ["id", "userId", "platform", "url", "title", "createdAt"]
+    },
+    "GlobalStats": {
+      "title": "GlobalStats",
+      "description": "Aggregated usage metrics for admin dashboard",
+      "type": "object",
+      "properties": {
+        "totalRequests": {
+          "type": "number",
+          "description": "Total analyze requests"
+        },
+        "successfulDownloads": {
+          "type": "number",
+          "description": "Total completed downloads"
+        },
+        "failedDownloads": {
+          "type": "number",
+          "description": "Total failed analyses/downloads"
+        },
+        "activeUsers": {
+          "type": "number",
+          "description": "Estimated active users"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last updated timestamp"
+        }
+      },
+      "required": ["totalRequests", "successfulDownloads", "failedDownloads"]
+    },
+    "DmcaReport": {
+      "title": "DmcaReport",
+      "description": "Copyright and content removal request",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Report ID"
+        },
+        "claimantName": {
+          "type": "string",
+          "description": "Name of copyright owner"
+        },
+        "claimantEmail": {
+          "type": "string",
+          "description": "Email address of claimant"
+        },
+        "targetUrl": {
+          "type": "string",
+          "description": "Infringing URL reported"
+        },
+        "statement": {
+          "type": "string",
+          "description": "Details of infringement claim"
+        },
+        "status": {
+          "type": "string",
+          "description": "pending, reviewed, resolved",
+          "enum": ["pending", "reviewed", "resolved"]
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp"
+        }
+      },
+      "required": ["id", "claimantName", "claimantEmail", "targetUrl", "statement"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile collection"
+    },
+    "/users/{userId}/history/{historyId}": {
+      "schema": "DownloadItem",
+      "description": "User personal download history and bookmarks"
+    },
+    "/stats/global": {
+      "schema": "GlobalStats",
+      "description": "Aggregated application statistics"
+    },
+    "/reports/{reportId}": {
+      "schema": "DmcaReport",
+      "description": "DMCA and copyright claims"
+    }
+  }
+}
